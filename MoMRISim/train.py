@@ -6,7 +6,7 @@ from pytorch_lightning.loggers import TensorBoardLogger, WandbLogger
 from pytorch_lightning.callbacks import ModelCheckpoint
 from .util.train_utils import Mean, HingeLoss, seed_worker
 from .util.utils import get_preprocess
-# from dataset.motion_dataset import TwoAFCDataset
+from dataset.motion_dataset import TwoAFCDataset
 from torch.utils.data import DataLoader
 import torch
 from peft import get_peft_model, LoraConfig, PeftModel

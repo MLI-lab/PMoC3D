@@ -6,13 +6,16 @@ import torch
 from matplotlib import pyplot as plt
 import random
 import numpy as np
-from functions.baselines_src.L1min_Simple import L1minModuleBase
 from types import SimpleNamespace
-from functions.utils.motion_simulation.motion_forward_backward_models import motion_correction_NUFFT, motion_corruption_NUFFT
-from functions.utils.helpers.helpers_math import complex_abs, complex_mul, complex_conj, ifft2c_ndim, fft2c_ndim
-from functions.utils.motion_simulation.sampling_trajectories import sim_motion_get_traj
-from functions.utils.motion_simulation.motion_trajectories import gen_rand_mot_params_interShot
-from Unet_recon_function import Unet_recon, registration
+from MoMRISim.util.helpers_math import complex_abs, complex_mul, complex_conj, ifft2c_ndim, fft2c_ndim
+
+
+from MoMRISim.motion_simulation.motion_forward_backward_models import motion_correction_NUFFT, motion_corruption_NUFFT
+from MoMRISim.motion_simulation.sampling_trajectories import sim_motion_get_traj
+from MoMRISim.motion_simulation.motion_trajectories import gen_rand_mot_params_interShot
+
+from MoMRISim.L1min_Simple import L1minModuleBase
+from MoMRISim.unet_recon_fnc import Unet_recon, registration
 
 # Parameter design:
 motion_severity_settings = {
@@ -29,7 +32,11 @@ motion_severity_settings = {
 args = SimpleNamespace(
     gpu = 0,
 )
-args.dataset_save_path = "/media/ssd3/cc-359_raw/calgary-campinas_version-1.0/CC359/Raw-data/Multi-channel/12-channel/motion_MRI_results/MotionCLIP_train_dataset"
+args.dataset_save_path = "/media/ssd0/kun/MoMRISim_dataset"
+volume_info_path = "./MoMRISim/dataset/volume_dataset_freqEnc170_train_len40.pickle"
+mask3D_path = "./MoMRISim/mask_3D_size_218_170_256_R4.9_poisson_simreal.pickle"
+train_base_path = "/media/ssd0/cc-359_raw/calgary-campinas_version-1.0/CC359/Raw-data/Multi-channel/12-channel/Train_converted/"
+train_smaps_base_path = "/media/ssd0/cc-359_raw/calgary-campinas_version-1.0/CC359/Raw-data/Multi-channel/12-channel/Train_s_maps_3D/"
 args.nufft_norm = "ortho"
 args.Ns = 52
 args.sampTraj_simMot = "random_cartesian"
@@ -37,7 +44,6 @@ args.center_in_first_state = True
 args.random_sampTraj_seed = 10086
 
 # Load the volume information:
-volume_info_path = "/media/ssd3/cc-359_raw/calgary-campinas_version-1.0/CC359/Raw-data/Multi-channel/12-channel/volume_dataset_freqEnc170_train_len40.pickle"
 with open(volume_info_path, 'rb') as f:
     volume_info = pickle.load(f)
 # Print some information about the dataset"
@@ -45,20 +51,17 @@ len_dataset = len(volume_info)
 print("Number of volumes in the training set: ", len_dataset)
 print("Example name of the first volume: ", volume_info[0]['filename'])
 # Mask the kspace generation:
-mask3D_path = "/media/ssd3/cc-359_raw/calgary-campinas_version-1.0/CC359/Raw-data/Multi-channel/12-channel/mask_3D_size_218_170_256_R4.9_poisson_simreal.pickle"
 with open(mask3D_path, 'rb') as f:
     mask3D = pickle.load(f)
 mask3D = torch.tensor(mask3D).unsqueeze(0).unsqueeze(-1).cuda(args.gpu)
 # Load the reference volume: 
 for picked_volume_index in range(len(volume_info)):
     picked_volume_info = volume_info[picked_volume_index]['filename']
-    train_base_path = "/media/ssd3/cc-359_raw/calgary-campinas_version-1.0/CC359/Raw-data/Multi-channel/12-channel/Train_converted/"
     # Load the volume:
     with h5py.File(os.path.join(train_base_path, picked_volume_info), 'r') as f:
         # Print the keys of the file:
         kspace3D = f['kspace'][:]
         print("Kspace shape: ", kspace3D.shape)
-    train_smaps_base_path = "/media/ssd3/cc-359_raw/calgary-campinas_version-1.0/CC359/Raw-data/Multi-channel/12-channel/Train_s_maps_3D"
     with h5py.File(os.path.join(train_smaps_base_path, "smaps_"+picked_volume_info), 'r') as f:
         # Print the keys of the file:
         smaps3D = f['smaps'][:]
@@ -107,7 +110,7 @@ for picked_volume_index in range(len(volume_info)):
     # Choosing 2 motion severity:
     choosing_severity_level = np.arange(1, 10)
     np.random.shuffle(choosing_severity_level)
-    choosing_severity_level = choosing_severity_level[5:7]
+    choosing_severity_level = choosing_severity_level[:7]
     for severity in choosing_severity_level:
         args.Ns = 52
         args.motionTraj_simMot = "uniform_interShot_event_model"
