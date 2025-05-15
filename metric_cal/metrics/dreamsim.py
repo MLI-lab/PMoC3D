@@ -2,6 +2,7 @@ import torch
 from dreamsim import dreamsim
 from PIL import Image
 import numpy as np
+from torchvision import transforms
 
 def dreamsim_score(recon: torch.Tensor, 
          ref: torch.Tensor, 
@@ -32,10 +33,12 @@ def dreamsim_score(recon: torch.Tensor,
         else:
             recon_slice = recon[:, :, i]
             ref_slice   = ref[:, :, i]
-        recon_tensor = torch.from_numpy(recon_slice).unsqueeze(0).repeat(3, 1, 1)
-        ref_tensor   = torch.from_numpy(ref_slice).unsqueeze(0).repeat(3, 1, 1)
-        recon_img = Image.fromarray((recon_tensor.permute(1, 2, 0).numpy() * 255).astype(np.uint8))
-        ref_img   = Image.fromarray((ref_tensor.permute(1, 2, 0).numpy() * 255).astype(np.uint8))
+        recon_tensor = recon_slice.unsqueeze(0).repeat(3, 1, 1)
+        ref_tensor   = ref_slice.unsqueeze(0).repeat(3, 1, 1)
+        # recon_img = Image.fromarray((recon_tensor.permute(1, 2, 0).numpy() * 255).astype(np.uint8))
+        # ref_img   = Image.fromarray((ref_tensor.permute(1, 2, 0).numpy() * 255).astype(np.uint8))
+        recon_img = transforms.ToPILImage()(recon_tensor)
+        ref_img   = transforms.ToPILImage()(ref_tensor)
         proc_recon = preprocess(recon_img)
         proc_ref   = preprocess(ref_img)
         processed_recon.append(proc_recon.squeeze())

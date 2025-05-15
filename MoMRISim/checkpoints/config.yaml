@@ -1,0 +1,22 @@
+!!python/object:argparse.Namespace
+batch_size: 8
+config: configs/train_motion_model_lora.yaml
+dataset_root: /media/ssd3/cc-359_raw/calgary-campinas_version-1.0/CC359/Raw-data/Multi-channel/12-channel/motion_MRI_results/MotionCLIP_train_dataset
+epochs: 40
+feat_type: cls
+hidden_size: 1
+load_dir: ./models
+log_dir: ./output
+lora_alpha: 8.0
+lora_dropout: 0.2
+lora_r: 4
+lr: 3.0e-05
+margin: 0.05
+model_type: dino_vitb16
+num_workers: 4
+save_mode: all
+seed: 1234
+stride: '16'
+tag: lora_single
+use_lora: true
+weight_decay: 0.0

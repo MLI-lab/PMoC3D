@@ -1,10 +1,4 @@
-import os
-import torch
-import h5py
-import matplotlib.pyplot as plt
-import ants
 import numpy as np
-import pickle
 
 def normalize_percentile(img, lower_percentile=1, upper_percentile=99.9, clip=True):
     """ Normalization to the lower and upper percentiles 

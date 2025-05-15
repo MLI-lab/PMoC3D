@@ -13,7 +13,6 @@ from preprocess.utils import sort_out_zero_slices, normalize_percentile
 
 def main(args):
     baseline_list = ['AltOpt', 'MotionTTT', 'stacked_unet']
-    # score_list = ['psnr', 'ssim', 'ap', 'tg', 'aes']
     score_list = args.metrics
 
     for score in score_list:

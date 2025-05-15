@@ -1,17 +1,13 @@
-import os
-import torch
-import h5py
-import matplotlib.pyplot as plt
 import ants
 import numpy as np
-import pickle
+from .utils import normalize_percentile
 
 def align_volumes_with_ants(
         recon_image_fg_1c: np.ndarray, # of shape (x,y,z)
         target_image_fg_1c: np.ndarray, # of shape (x,y,z)
 ):
-    # recon_image_fg_1c = normalize_percentile(recon_image_fg_1c)
-    # target_image_fg_1c = normalize_percentile(target_image_fg_1c)
+    recon_image_fg_1c = normalize_percentile(recon_image_fg_1c)
+    target_image_fg_1c = normalize_percentile(target_image_fg_1c)
     
     recon_image_fg_1c_ants = ants.from_numpy(recon_image_fg_1c)
     target_image_fg_1c_ants = ants.from_numpy(target_image_fg_1c)
