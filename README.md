@@ -58,9 +58,9 @@ Replace `<your_local_save_path>` and `<your_hf_token>` with your actual values.
 
 We provide reconstruction outputs for three baseline models — MotionTTT, AltOpt, and Stacked UNet — located in the `PMoC3D/reconstruction` directory.
 
-You can calculate reconstruction scores using the following steps:
+You can calculate reconstruction scores using the following steps, using the same preprocessing pipeline as in [1].
 
-### Step 1: Run Registration with ANTs
+### Step 1: Run Registration with [Advanced Normalization Tools(ANTs)](https://github.com/ANTsX/ANTsPy?tab=readme-ov-file)
 
 This step registers all reconstructed volumes to the reference using ANTs. Run:
 
@@ -98,3 +98,6 @@ python metric_cal/main_score_cal.py \
 
 Replace `/your_path` with your actual working directory path.
 
+## Reference
+
+- [1] Marchetto, E., Eichhorn, H., Gallichan, D., Schnabel, J. A., & Ganz, M. (2024). Agreement of Image Quality Metrics with Radiological Evaluation in the Presence of Motion Artifacts. arXiv preprint arXiv:2412.18389.
