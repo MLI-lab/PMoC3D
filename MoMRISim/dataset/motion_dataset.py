@@ -6,7 +6,7 @@ from PIL import Image
 from torch.utils.data import Dataset
 from itertools import combinations
 import torch
-from util.utils import get_preprocess_fn
+from MoMRISim.util.utils import get_preprocess_fn
 from torchvision import transforms
 
 
@@ -74,10 +74,8 @@ class TwoAFCDataset(Dataset):
         severityB = self._parse_severity(severityB_file)  # int
         severityA_path = os.path.join(subdir_path, severityA_file)
         severityB_path = os.path.join(subdir_path, severityB_file)
-        # dataset_A = random.choice(["unet_recon", "l1_recon"])
-        # dataset_B = random.choice(["unet_recon", "l1_recon"])
-        dataset_A = random.choice(["unet_recon_no_reg", "l1_recon"])
-        dataset_B = random.choice(["unet_recon_no_reg", "l1_recon"])
+        dataset_A = random.choice(["unet_recon", "l1_recon"])
+        dataset_B = random.choice(["unet_recon", "l1_recon"])
 
         # =============== load severity_A and severity_B files ===============
         with h5py.File(severityA_path, 'r') as fA:
