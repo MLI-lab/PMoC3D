@@ -54,11 +54,12 @@ To download the PMoC3D dataset, follow these steps:
 
 Replace `<your_local_save_path>` and `<your_hf_token>` with your actual values.
 
+**Baseline reconstruction**: All volumes are processed and reconstructed using the code from [MotionTTT](https://github.com/MLI-lab/MRI_MotionTTT)[1].
 ## Score Calculation
 
 We provide reconstruction outputs for three baseline models — MotionTTT, AltOpt, and Stacked UNet — located in the `PMoC3D/reconstruction` directory.
 
-You can calculate reconstruction scores using the following steps, using the same preprocessing pipeline as in [1].
+You can calculate reconstruction scores using the following steps, using the same preprocessing pipeline as in [2].
 
 ### Step 1: Run Registration with [Advanced Normalization Tools(ANTs)](https://github.com/ANTsX/ANTsPy?tab=readme-ov-file)
 
@@ -100,4 +101,6 @@ Replace `/your_path` with your actual working directory path.
 
 ## Reference
 
-- [1] Marchetto, E., Eichhorn, H., Gallichan, D., Schnabel, J. A., & Ganz, M. (2024). Agreement of Image Quality Metrics with Radiological Evaluation in the Presence of Motion Artifacts. arXiv preprint arXiv:2412.18389.
+- [1] Klug, T., Wang, K., Ruschke, S., & Heckel, R. (2024). MotionTTT: 2D Test-Time-Training Motion Estimation for 3D Motion Corrected MRI. arXiv preprint arXiv:2409.09370.
+
+- [2] Marchetto, E., Eichhorn, H., Gallichan, D., Schnabel, J. A., & Ganz, M. (2024). Agreement of Image Quality Metrics with Radiological Evaluation in the Presence of Motion Artifacts. arXiv preprint arXiv:2412.18389.
