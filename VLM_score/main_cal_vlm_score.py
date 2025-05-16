@@ -10,7 +10,7 @@ from vlm_score_utils import image_generation, chatgpt_scoring
 
 def main(recon_save_path: str, image_save_base_path: str, score_save_path: str, open_ai_api: str):
     openai.api_key = open_ai_api
-    severity_level_score = {'mo motion':0, 'mild':1, 'moderate':2, 'severe':3}
+    severity_level_score = {'no motion':0, 'mild':1, 'moderate':2, 'severe':3}
     image_save_path = os.path.join(image_save_base_path, 'gpt_input')
     baseline_list = ['AltOpt','MotionTTT','stacked_unet']
     score_record = {}

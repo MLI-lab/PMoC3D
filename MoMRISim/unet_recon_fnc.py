@@ -14,7 +14,7 @@ def Unet_recon(
     from safetensors.torch import load_file
     weights_path = hf_hub_download(
         repo_id="mli-lab/Unet48-2D-CC359",
-        filename="model.safetensors"
+        filename="model.safetensors",
     )
     state_dict = load_file(weights_path)
     model = Unet(in_chans=2, out_chans=2, chans=48,)
