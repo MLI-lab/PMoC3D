@@ -35,7 +35,7 @@ pip install -r requirements.txt
 To download the PMoC3D dataset, follow these steps:
 
 1. **Request Access**  
-   Visit the [PMoC3D HuggingFace](https://huggingface.co/datasets/mli-lab/PMoC3D) and agree to the Data Usage Agreement (DUA).
+   Visit the [PMoC3D HuggingFace](https://huggingface.co/datasets/mli-lab/PMoC3D) and agree to the Data Usage Agreement (DUA). The gated access is a legal requirement, and the access form is simple and straightforward.
 
 2. **Generate a Token**  
    After access is granted, create a Hugging Face access token from your Hugging Face account settings.
