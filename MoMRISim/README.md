@@ -1,6 +1,4 @@
-# MoMRISim
-
-This repository contains code for downloading the PMoC3D dataset and evaluating 3D reconstruction quality.
+# MoMRISim Training
 
 ## Dataset Generation
 
